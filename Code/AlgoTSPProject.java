@@ -92,14 +92,57 @@ public class AlgoTSPProject {
             System.out.printf("\n");
         }   
     }
+    public int [][] Tournment_Selection(double fitness[],int city,int chromones[][])
+    {
+        Random seed = new Random();int selected[]=new int [city],num,selected_population[][]= new int [10][city+1],parents [][]=new int [2][city+1];
+        double new_fitness[]= new double [10],best_fit_1=0,best_fit_2=0;int p1=0,p2=0;
+        for(int i=0;i<10;i++)
+        {
+            num=seed.nextInt(city);
+            if(selected[num] == 0)
+            {
+                selected[num]=1;
+                for(int j=0;j<chromones[0].length;j++)
+                {
+                    System.out.println(num);
+                    selected_population[i][j]=chromones[num][j];
+                    new_fitness[i]=fitness[num];
+                }
+            }
+            else
+                i--;
+        }
+        for(int i=0;i<10;i++)
+        {
+            if(new_fitness[i] > best_fit_1)
+            {
+                best_fit_1=new_fitness[i];
+                p1=i;
+            }
+        }
+        for(int i=0;i<10;i++)
+        {
+            if((new_fitness[i] > best_fit_2) && i != p1)
+            {
+                best_fit_2=new_fitness[i];
+                p2=i;
+            }
+        }
+        for(int i=0;i<city+1;i++)
+        {
+            parents[0][i]=selected_population[p1][i];
+            parents[1][i]=selected_population[p2][i];       
+        }
+        return parents;
+    }
     public static void main(String[] args) throws FileNotFoundException 
     {
-        AlgoTSPProject obj=new AlgoTSPProject();int data[][];int chromones[][];double fitness[];
-        File file = new File("D:\\University\\Semester 5\\Projects\\Algo\\gr21.txt");
+        AlgoTSPProject obj=new AlgoTSPProject();int data[][];int chromones[][];double fitness[];int parents[][];
+        File file = new File("D:\\University\\Semester 5\\Projects\\Algo\\gr17.txt");
         data=obj.readdata(file,17);
         obj.debug(data);
         chromones=obj.makechromones(17);
         fitness=obj.fitness(data, chromones);
-        System.out.println(fitness[0]);
+        parents=obj.Tournment_Selection(fitness,17,chromones);
     }  
 }
