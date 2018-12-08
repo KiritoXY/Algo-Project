@@ -63,9 +63,9 @@ public class AlgoTSPProject {
         }
         return data;
     }
-    public float [] fitness(int data[][],int chromones[][])
+    public double [] fitness(int data[][],int chromones[][])
     {
-        int city1,city2,getdist,total=0;float fitness[]=new float [20];float temp;
+        int city1,city2;double getdist,total=0;double fitness[]=new double [20];double temp;
         for(int i=0;i<chromones.length;i++)
         {
             for(int j=0;j<(chromones[0].length)-1;j++)
@@ -87,18 +87,19 @@ public class AlgoTSPProject {
             for(int j=0;j<newdata[0].length;j++)
             {
                 temp=Integer.toString(newdata[i][j]);
-                System.out.print(temp+' ');
+                System.out.print(temp+'\t');
             }
             System.out.printf("\n");
         }   
     }
     public static void main(String[] args) throws FileNotFoundException 
     {
-        AlgoTSPProject obj=new AlgoTSPProject();int data[][];int chromones[][];float fitness[];
+        AlgoTSPProject obj=new AlgoTSPProject();int data[][];int chromones[][];double fitness[];
         File file = new File("D:\\University\\Semester 5\\Projects\\Algo\\gr21.txt");
         data=obj.readdata(file,17);
         obj.debug(data);
         chromones=obj.makechromones(17);
         fitness=obj.fitness(data, chromones);
+        System.out.println(fitness[0]);
     }  
 }
